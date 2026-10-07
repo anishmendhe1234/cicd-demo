@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    parameters {
+        choice(name: 'DEPLOY_ENV', choices: ['dev', 'staging', 'prod'], description: 'Select target Environment')
+    }
+    environment {
+        APP_NAME = 'cicd-demo-app'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo "Building application: ${env.APP_NAME}"
+                echo "Target Deployment environment: ${params.DEPLOY_ENV}"
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully with parameters'
+        }
+    }
+}
